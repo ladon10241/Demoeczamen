@@ -79,10 +79,7 @@ namespace Демоэкзамен
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -141,6 +138,11 @@ namespace Демоэкзамен
         private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             selected_id = Convert.ToString(dataGridView1.Rows[e.RowIndex].Cells[0].Value); // сбор параметра для удаления продукта
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }     
 }

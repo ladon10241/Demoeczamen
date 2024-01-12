@@ -18,8 +18,12 @@ namespace Демоэкзамен
         SqlConnection sqlConnect = new SqlConnection(connString);
         string selected_id;
         int i = 0;
-        int b = 1;
-
+        int b = 0;
+        class pol
+        {
+            public int OrderPickupPoint { get; set; }
+            public string Index { get; set; }
+        }
 
         public FormСart(int id1)
         {
@@ -70,6 +74,13 @@ namespace Демоэкзамен
             rd.Read();
             label13.Text = rd.GetString(1) + rd.GetString(2) + rd.GetString(3);
             sqlConnect.Close();
+            sqlConnect.Open();
+
+            List<pol> pol = new List<pol>();
+            SqlCommand logRequstdep = new SqlCommand("Select * from OrderPickupPoint", sqlConnect);
+            logRequstdep.Connection = sqlConnect;
+            sqlConnect.Close();
+            
         }
 
         private void dataGridView2_CellEnter(object sender, DataGridViewCellEventArgs e)
@@ -78,6 +89,95 @@ namespace Демоэкзамен
         }
 
         private void button2_Click(object sender, EventArgs e)
+        {
+            sqlConnect.Open();
+            SqlCommand logRequst = new SqlCommand();
+            logRequst.CommandType = CommandType.StoredProcedure;
+            logRequst.CommandText = "OrderAdd";
+
+            logRequst.Connection = sqlConnect;
+
+            logRequst.Parameters.AddWithValue("@OrderPickupPoint", comboBox2.SelectedIndex);
+            logRequst.Parameters.AddWithValue("@UserID", id);
+
+            logRequst.ExecuteNonQuery();
+            
+            try
+            {
+
+                
+
+            }
+            catch (Exception )
+            {
+                MessageBox.Show("Не указана точка самовывоза");
+                Menu fu = new Menu(id);
+                fu.Show();
+            }
+            finally
+            {
+                sqlConnect.Close();
+
+            }
+
+            while (b+1<i){
+
+                sqlConnect.Open();
+                SqlCommand logRequst1 = new SqlCommand();
+                logRequst1.CommandType = CommandType.StoredProcedure;
+            logRequst1.CommandText = "OrderProdictAdd";
+
+            logRequst1.Connection = sqlConnect;
+            
+            logRequst1.Parameters.AddWithValue("@ProductArticleNumber", dataGridView1[0,b].Value.ToString());
+            logRequst1.Parameters.AddWithValue("@ProductQuanity", dataGridView1[1, b].Value);
+              
+            logRequst1.ExecuteNonQuery();
+                sqlConnect.Close();
+                b++;
+                try
+                {
+
+                    
+
+                }
+                catch (Exception )
+                {
+                    
+                }
+            }
+            try
+            {
+                
+                MessageBox.Show("Заказ добавлен");
+                this.Hide();
+                Menu fu = new Menu(id);
+                fu.Show();
+
+            }
+            catch (Exception )
+            {
+                MessageBox.Show("Заказ добавлен");
+                Menu fu = new Menu(id);
+                fu.Show();
+            }
+            finally
+            {
+
+
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+           
+                Menu student = new Menu(id);
+                student.ShowDialog();
+            
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
