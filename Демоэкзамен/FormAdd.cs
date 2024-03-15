@@ -34,13 +34,13 @@ namespace Демоэкзамен
             SqlDataReader rd = logRequst.ExecuteReader();
             rd.Read();
             label13.Text = rd.GetString(1) + rd.GetString(2) + rd.GetString(3);
-            
+            sqlConnect.Close();
         }
 
         private void login_button_Click(object sender, EventArgs e)
         {
-            
-            
+            sqlConnect.Open();
+
             SqlCommand logRequst = new SqlCommand();
             logRequst.CommandType = CommandType.StoredProcedure;
             logRequst.CommandText = "ProductAdd";

@@ -41,7 +41,7 @@ namespace Демоэкзамен
             SqlDataReader rd = logRequst.ExecuteReader();
             rd.Read();
             label13.Text = rd.GetString(1) + rd.GetString(2) + rd.GetString( 3);
-
+            sqlConnect.Close();
 
         }
         private void button3_Click(object sender, EventArgs e)
@@ -110,6 +110,7 @@ namespace Демоэкзамен
 
         private void удалениеToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            sqlConnect.Open();
             SqlCommand logRequst = new SqlCommand();
             logRequst.Connection = sqlConnect;
             logRequst.CommandType = CommandType.StoredProcedure;
